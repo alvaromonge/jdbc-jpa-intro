@@ -1,7 +1,4 @@
 /*
- *  Copyright (C) 2013-2017 Alvaro Monge <alvaro.monge@csulb.edu>
- *  California State University Long Beach (CSULB) ALL RIGHTS RESERVED
- * 
  * Licensed under the Open Software License (OSL 3.0).
  *     http://opensource.org/licenses/AFL-3.0
  * 
@@ -12,6 +9,8 @@
  *  This program is distributed to CSULB students in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * 
+ *  2013-2017 Alvaro Monge <alvaro.monge@csulb.edu>
  * 
  */
 package toybankjdbcdemo;
@@ -51,7 +50,7 @@ public class ToybankJDBCDemo {
     */
    // JDBC SQLite Driver 
    private final static String SQLITE_DRIVER = "org.sqlite.JDBC"; 
-   private final static String SQLITE_JDBC_URL = "jdbc:sqlite:/Users/alvaro/sqlite/pa2.db";
+   private final static String SQLITE_JDBC_URL = "jdbc:sqlite:/Users/alvaro/sqlite/toybank.db";
 
    // JDBC JavaDB (Derby) Driver -- Client/Server (Network)
    private final static String DERBY_NETWORK_DRIVER = "org.apache.derby.jdbc.ClientDriver"; 
@@ -64,7 +63,7 @@ public class ToybankJDBCDemo {
 
 
    private final static String JDBC_DRIVER = DERBY_EMBEDDED_DRIVER;
-   private final static String JDBC_URL = DERBY_EMBEDDED_JDBC_URL;
+   private final static String JDBC_URL = SQLITE_JDBC_URL;
 
 
    /**
@@ -209,17 +208,7 @@ public class ToybankJDBCDemo {
     * retrieved information
     */
    public void displayAllLoans() {
-      try (Statement stmt = connection.createStatement(); // TODO: explain try with resources
-           ResultSet   rs = stmt.executeQuery(SQL_FIND_ALL_LOANS)) {
-
-         System.out.print("\n\nThe following are the loans in ToyBank:\n\n");
-         while (rs.next()) {  // TODO: iterating through the ResultSet
-            displayOneLoan(rs);
-         }
-         System.out.print("\n\n");
-      } catch (SQLException sqle) {
-         LOGGER.log(Level.SEVERE, "Unable to execute DB statement due to error {0}", sqle.getMessage());
-      }
+      // TODO: Implement this method
    }
 
    /**
@@ -236,7 +225,6 @@ public class ToybankJDBCDemo {
 
       System.out.printf("%s owns Loan # %s, in the amount of $%.2f\n",
               name, rs.getString(3), rs.getFloat("amount"));
-
    }
 
    /**
