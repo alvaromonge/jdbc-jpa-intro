@@ -208,7 +208,17 @@ public class ToybankJDBCDemo {
     * retrieved information
     */
    public void displayAllLoans() {
-      // TODO: Implement this method
+      try (Statement stmt = connection.createStatement(); // TODO: explain try with resources
+           ResultSet   rs = stmt.executeQuery(SQL_FIND_ALL_LOANS)) {
+
+         System.out.print("\n\nThe following are the loans in ToyBank:\n\n");
+         while (rs.next()) {  // TODO: iterating through the ResultSet
+            displayOneLoan(rs);
+         }
+         System.out.print("\n\n");
+      } catch (SQLException sqle) {
+         LOGGER.log(Level.SEVERE, "Unable to execute DB statement due to error {0}", sqle.getMessage());
+      }
    }
 
    /**
@@ -235,6 +245,7 @@ public class ToybankJDBCDemo {
     */
    public void adjustLoans() {
       // TODO: demo of two PreparedStatements: query and update
+      // See: try with resources
       try (PreparedStatement findLoansByCustomer = connection.prepareStatement(SQL_FIND_LOANS_TO_ADJUST);
            PreparedStatement updateStatement = connection.prepareStatement(SQL_ADJUST_LOAN);) {
 
